@@ -1,7 +1,9 @@
 package pairmatching.controller
 
 import pairmatching.model.Course.Companion.stringToCourse
+import pairmatching.model.Crew
 import pairmatching.model.CrewNameReader
+import pairmatching.model.PairMatchingMachine
 import pairmatching.view.InputView
 import pairmatching.view.OutputView
 
@@ -34,8 +36,8 @@ class MatchingController(
     private fun pairMatching() {
         outputView.printCourseAndMission()
         val matchingInfo = getValidMatchingInfo()
-        val crewName = CrewNameReader().read(matchingInfo[0])
-        println(crewName)
+        val crewNames = CrewNameReader().read(matchingInfo[0])
+        PairMatchingMachine().match(matchingInfo[0],crewNames) // 불러온 List<String>으로 매칭 진행
     }
 
     private fun getValidMatchingInfo(): List<String> {
