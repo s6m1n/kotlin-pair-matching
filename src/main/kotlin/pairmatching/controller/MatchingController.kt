@@ -36,9 +36,29 @@ class MatchingController(
 
     private fun pairMatching() {
         outputView.printCourseAndMission()
-        val matchingInfo = getValidMatchingInfo()
-        val crewNames = CrewNameReader().read(matchingInfo[0])
-        PairMatchingMachine(matchingInfo,crewNames,pairMatchingRepository).match() // 불러온 List<String>으로 매칭 진행
+        val matchingInfo = getValidMatchingInfo() // 코스, 레벨, 미션
+        val crewNames = CrewNameReader().read(matchingInfo[0]) // 코스에 해당하는 크루명 읽어오기
+        val pairMatchingMachine = PairMatchingMachine(matchingInfo, crewNames, pairMatchingRepository)
+        if (pairMatchingRepository.alreadyExist(matchingInfo)) {
+            outputView.printRematchMessage()
+            checkRematch(pairMatchingMachine)
+        } else pairMatchingMachine.match()
+    }
+
+    private fun checkRematch(matchingMachine: PairMatchingMachine) {
+        when (getRematchCommand() == "네") {
+            true -> matchingMachine.match()
+            false -> return
+        }
+    }
+
+    private fun getRematchCommand(): String {
+        return try {
+            inputView.readValidRematchCommand()
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            getRematchCommand()
+        }
     }
 
     private fun getValidMatchingInfo(): List<String> {

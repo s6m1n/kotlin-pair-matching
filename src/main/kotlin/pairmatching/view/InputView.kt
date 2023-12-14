@@ -11,6 +11,14 @@ class InputView {
         return input
     }
 
+    fun readValidRematchCommand(): String = validateRematchCommand(Console.readLine())
+
+
+    private fun validateRematchCommand(input: String): String {
+        require(input in listOf<String>("네", "아니오")) { "[ERROR] 올바르지 않은 입력값입니다" }
+        return input
+    }
+
     fun readValidMatchingInfo(): List<String> = validateMatchingInfo(Console.readLine())
 
     private fun validateMatchingInfo(input: String): List<String> {

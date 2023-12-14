@@ -4,7 +4,7 @@ import pairmatching.model.Course.Companion.stringToCourse
 import pairmatching.model.Level.Companion.stringToLevel
 import pairmatching.model.Mission.Companion.stringToMission
 
-class PairMatchingRepository() {
+class PairMatchingRepository {
 
     private val matchingResults = mutableSetOf<PairInfo>()
 
@@ -64,7 +64,7 @@ class PairMatchingRepository() {
 
 
     fun alreadyExist(matchingInfo: List<String>): Boolean {
-        val tmpPair = makePairInfo(matchingInfo, pareUp(listOf("")))
+        val tmpPair = makePairInfo(matchingInfo, pareUp(listOf("","","","")))
         return matchingResults.any {
             isSameCourse(it, tmpPair) && isSameLevel(it, tmpPair) && isSameMission(it, tmpPair)
         }
