@@ -2,6 +2,8 @@ package pairmatching.controller
 
 import pairmatching.model.Course.Companion.stringToCourse
 import pairmatching.model.CrewNameReader
+import pairmatching.model.Level.Companion.stringToLevel
+import pairmatching.model.Mission.Companion.stringToMission
 import pairmatching.model.PairMatchingMachine
 import pairmatching.model.PairMatchingRepository
 import pairmatching.view.InputView
@@ -67,6 +69,8 @@ class MatchingController(
         return try {
             val input = inputView.readValidMatchingInfo()
             input[0].stringToCourse()
+            input[1].stringToLevel()
+            input[2].stringToMission()
             input
         } catch (e: IllegalArgumentException) {
             println(e.message)
@@ -75,7 +79,10 @@ class MatchingController(
     }
 
     private fun pairCheck() {
-        println("페어 조회\n")
+        outputView.printCourseAndMission()
+        val matchingInfo = getValidMatchingInfo() // 코스, 레벨, 미션
+        val crewPair = pairMatchingRepository.getPair(matchingInfo)?.crewPairs
+        outputView.printPairMatchingResult(crewPair)
     }
 
     private fun pairReset() {
