@@ -1,5 +1,7 @@
 package pairmatching.controller
 
+import pairmatching.model.Course.Companion.stringToCourse
+import pairmatching.model.CrewNameReader
 import pairmatching.view.InputView
 import pairmatching.view.OutputView
 
@@ -32,11 +34,15 @@ class MatchingController(
     private fun pairMatching() {
         outputView.printCourseAndMission()
         val matchingInfo = getValidMatchingInfo()
+        val crewName = CrewNameReader().read(matchingInfo[0])
+        println(crewName)
     }
 
     private fun getValidMatchingInfo(): List<String> {
         return try {
-            inputView.readValidMatchingInfo()
+            val input = inputView.readValidMatchingInfo()
+            input[0].stringToCourse()
+            input
         } catch (e: IllegalArgumentException) {
             println(e.message)
             getValidMatchingInfo()
