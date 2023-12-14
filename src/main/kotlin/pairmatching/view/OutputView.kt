@@ -36,7 +36,7 @@ class OutputView {
 
     fun printPairMatchingResult(crewPair: List<Set<String>>?) {
         if (crewPair == null) {
-            println("\n페어 매칭을 할 수 없습니다.")
+            println("\n[ERROR] 매칭 이력이 없습니다.\n")
         } else {
             println("\n페어 매칭 결과입니다.")
             printCrewPairs(crewPair).also { println() }
@@ -47,4 +47,7 @@ class OutputView {
         crewPair.forEach { set -> println(set.joinToString(" : ")) }
     }
 
+    fun printPairResetMessage(){
+        println("초기화 되었습니다.\n")
+    }
 }

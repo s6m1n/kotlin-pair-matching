@@ -101,4 +101,8 @@ class PairMatchingRepository {
         )
         return pairMatchingResult
     }
+
+    fun reset() {
+        matchingResults.clear()
+    }
 }

@@ -86,6 +86,7 @@ class MatchingController(
     }
 
     private fun pairReset() {
-        println("페어 초기화\n")
+        pairMatchingRepository.reset()
+        outputView.printPairResetMessage()
     }
 }

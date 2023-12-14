@@ -23,7 +23,7 @@ enum class Mission(val mission: String) {
                 IMPROVEMENT.mission -> IMPROVEMENT
                 RELEASE.mission -> RELEASE
                 NONE.mission -> NONE
-                else -> throw IllegalArgumentException("[ERROR] 적절한 미션을 입력하세요.")
+                else -> throw IllegalArgumentException("\n[ERROR] 적절한 미션을 입력하세요.")
             }
         }
     }

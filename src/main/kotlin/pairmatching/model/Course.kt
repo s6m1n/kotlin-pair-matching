@@ -9,7 +9,7 @@ enum class Course(val value: String) {
             return when (this) {
                 BACKEND.value -> BACKEND
                 FRONTEND.value -> FRONTEND
-                else -> throw IllegalArgumentException("[ERROR] 코스는 프론트엔드, 백엔드 중 입력하세요")
+                else -> throw IllegalArgumentException("\n[ERROR] 코스는 프론트엔드, 백엔드 중 입력하세요")
             }
         }
     }
