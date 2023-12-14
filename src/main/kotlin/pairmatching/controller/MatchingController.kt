@@ -10,9 +10,9 @@ import pairmatching.view.OutputView
 class MatchingController(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private var command: String = ""
+    private val pairMatchingRepository: PairMatchingRepository = PairMatchingRepository()
 ) {
-    private val pairMatchingRepository = PairMatchingRepository()
+    private var command: String = ""
     fun start() {
         do {
             outputView.printStartMessage()
@@ -42,12 +42,14 @@ class MatchingController(
         if (pairMatchingRepository.alreadyExist(matchingInfo)) {
             outputView.printRematchMessage()
             checkRematch(pairMatchingMachine)
-        } else pairMatchingMachine.match()
+        } else {
+            outputView.printPairMatchingResult(pairMatchingMachine.match())
+        }
     }
 
-    private fun checkRematch(matchingMachine: PairMatchingMachine) {
+    private fun checkRematch(pairMatchingMachine: PairMatchingMachine) {
         when (getRematchCommand() == "네") {
-            true -> matchingMachine.match()
+            true -> outputView.printPairMatchingResult(pairMatchingMachine.match())
             false -> return
         }
     }

@@ -25,19 +25,11 @@ class PairMatchingRepository {
         val existingCrewPairs = comparePairInfo.map { it.crewPairs } // 겹치는지 비교할 Pair들 리스트
         val isValidMatch = !existingCrewPairs.any { isOverlap(it, newCrewPair) }
         if (isValidMatch) {
-            matchingResults.add(crewPairInfo)
+            exchange(matchingInfo, crewPairInfo)
         }
         return isValidMatch
-
-//        val matchSize = matchingResults.size
-//        val newMatchSize = matchingResults.size
     }
 
-    private fun printCrewPairs(crewPair: List<Set<String>>) {
-        crewPair.forEach { set -> println(set.joinToString(" : ")) }
-    }
-
-    // 정보를 PairInfo 객체로 만들어줌
     private fun makePairInfo(matchingInfo: List<String>, crewName: List<Set<String>>): PairInfo {
         return PairInfo(
             matchingInfo[0].stringToCourse(),
@@ -59,12 +51,24 @@ class PairMatchingRepository {
         existingCrewPair: List<Set<String>>,
         newCrewPair: List<Set<String>>
     ): Boolean {
-        return (existingCrewPair.size + newCrewPair.size != (existingCrewPair+newCrewPair).toSet().size)
+        return (existingCrewPair.size + newCrewPair.size != (existingCrewPair + newCrewPair).toSet().size)
     }
 
 
+    fun exchange(matchingInfo: List<String>, pairInfo: PairInfo) {
+        val tmpPair = makePairInfo(matchingInfo, pareUp(listOf("", "", "", "")))
+        if (alreadyExist(matchingInfo)) {
+            matchingResults.remove(matchingResults.find {
+                isSameCourse(it, tmpPair)
+                        && isSameLevel(it, tmpPair)
+                        && isSameMission(it, tmpPair)
+            })
+        }
+        matchingResults.add(pairInfo)
+    }
+
     fun alreadyExist(matchingInfo: List<String>): Boolean {
-        val tmpPair = makePairInfo(matchingInfo, pareUp(listOf("","","","")))
+        val tmpPair = makePairInfo(matchingInfo, pareUp(listOf("", "", "", "")))
         return matchingResults.any {
             isSameCourse(it, tmpPair) && isSameLevel(it, tmpPair) && isSameMission(it, tmpPair)
         }

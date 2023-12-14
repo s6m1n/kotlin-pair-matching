@@ -27,9 +27,24 @@ class OutputView {
         )
     }
 
-    fun printRematchMessage(){
-        println("매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n" +
-                "네 | 아니오")
+    fun printRematchMessage() {
+        println(
+            "\n매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n" +
+                    "네 | 아니오"
+        )
+    }
+
+    fun printPairMatchingResult(crewPair: List<Set<String>>?) {
+        if (crewPair == null) {
+            println("\n페어 매칭을 할 수 없습니다.")
+        } else {
+            println("\n페어 매칭 결과입니다.")
+            printCrewPairs(crewPair).also { println() }
+        }
+    }
+
+    private fun printCrewPairs(crewPair: List<Set<String>>) {
+        crewPair.forEach { set -> println(set.joinToString(" : ")) }
     }
 
 }
