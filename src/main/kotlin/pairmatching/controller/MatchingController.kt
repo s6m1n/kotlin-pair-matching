@@ -11,7 +11,7 @@ class MatchingController(
     fun start() {
         do {
             outputView.printStartMessage()
-            when (getValidInput()) {
+            when (getValidCommand()) {
                 "1" -> pairMatching()
                 "2" -> pairCheck()
                 "3" -> pairReset()
@@ -20,24 +20,34 @@ class MatchingController(
         } while (command != "Q")
     }
 
-    private fun getValidInput(): String {
+    private fun getValidCommand(): String {
         return try {
-            inputView.readValidInput()
+            inputView.readValidCommand()
         } catch (e: IllegalArgumentException) {
             println(e.message)
-            getValidInput()
+            getValidCommand()
         }
     }
 
     private fun pairMatching() {
-        println("페어 매칭")
+        outputView.printCourseAndMission()
+        val matchingInfo = getValidMatchingInfo()
     }
 
-    private fun pairReset() {
-        println("페어 초기화")
+    private fun getValidMatchingInfo(): List<String> {
+        return try {
+            inputView.readValidMatchingInfo()
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            getValidMatchingInfo()
+        }
     }
 
     private fun pairCheck() {
-        println("페어 조회")
+        println("페어 조회\n")
+    }
+
+    private fun pairReset() {
+        println("페어 초기화\n")
     }
 }
