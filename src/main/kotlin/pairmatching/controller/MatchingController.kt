@@ -10,6 +10,7 @@ class MatchingController(
 ) {
     fun start() {
         do {
+            outputView.printStartMessage()
             when (getValidInput()) {
                 "1" -> pairMatching()
                 "2" -> pairCheck()
